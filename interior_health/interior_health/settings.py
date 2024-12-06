@@ -30,6 +30,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# settings.py
+AUTH_USER_MODEL = 'users.User'  # This tells Django to use the custom User model in the 'users' app
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

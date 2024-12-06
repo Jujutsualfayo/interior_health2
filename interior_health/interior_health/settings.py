@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'interior_health.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'interior_health',  # Your database name
+        'USER': 'interior_health_user',  # Your database username
+        'PASSWORD': 'Alphafemale1',  # Your database password
+        'HOST': 'localhost',  # Set to 'localhost' for local use
+        'PORT': '3306',  # Default MySQL port
     }
 }
 

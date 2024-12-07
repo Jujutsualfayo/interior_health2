@@ -5,7 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interior Health</title>
-  <!-- You can add CSS links here, for example, linking to a CSS file or CDN -->
+  
+  <!-- Load static files -->
+  {% load static %}
+  
+  <!-- Link to your custom CSS file -->
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
@@ -22,7 +26,7 @@
   </header>
 
   <main>
-    {% block content %}  <!-- Content of each page will go here -->
+    {% block content %}
     {% endblock %}
   </main>
 
@@ -31,4 +35,3 @@
   </footer>
 </body>
 </html>
-

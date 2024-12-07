@@ -25,6 +25,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 # settings.py
 AUTH_USER_MODEL = 'users.User'  # This tells Django to use the custom User model in the 'users' app
 

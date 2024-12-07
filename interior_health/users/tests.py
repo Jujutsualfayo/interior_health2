@@ -1,13 +1,15 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model  # Use the correct custom user model
+from django.contrib.auth.models import Group
 
 class UsersAppTests(TestCase):
     def setUp(self):
         # Create a test user group (e.g., "Patient")
         self.group = Group.objects.create(name="Patient")
 
-        # Create a test user
+        # Create a test user using the custom User model
+        User = get_user_model()  # Get the custom User model
         self.user = User.objects.create_user(
             username="testuser",
             email="testuser@example.com",
@@ -69,4 +71,3 @@ class UsersAppTests(TestCase):
         response = self.client.get(reverse('users:profile'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/profile.html')
-

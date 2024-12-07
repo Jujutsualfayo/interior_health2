@@ -12,24 +12,23 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# Media files (uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2e1gqzl73+ui_ww4g$o+3+0^est30z=yhz_o^!l9^ty_b2$#8('
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-2e1gqzl73+ui_ww4g$o+3+0^est30z=yhz_o^!l9^ty_b2$#8(')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-
-# settings.py
 AUTH_USER_MODEL = 'users.User'  # This tells Django to use the custom User model in the 'users' app
 
 INSTALLED_APPS = [
@@ -39,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
+    'users',  # Custom users app
+    'django.contrib.humanize',  # Optional, for better formatting of numbers, dates, etc.
 ]
 
 MIDDLEWARE = [
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'interior_health.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],  # Templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'interior_health.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'interior_health_django',  # Use your new database
-        'USER': 'interior_health_user',
-        'PASSWORD': 'Alphafemale1',  # Your database password
-        'HOST': 'localhost',  # Or your database host
-        'PORT': '3306',  # Default MySQL port
+        'NAME': os.getenv('DB_NAME', 'interior_health_django'),  # Use your new database
+        'USER': os.getenv('DB_USER', 'interior_health_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'Alphafemale1'),  # Your database password
+        'HOST': os.getenv('DB_HOST', 'localhost'),  # Or your database host
+        'PORT': os.getenv('DB_PORT', '3306'),  # Default MySQL port
     }
 }
 
@@ -121,3 +121,31 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Caching (optional, only if you plan to use caching)
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#         'TIMEOUT': 300,
+#     }
+# }
+
+# Logging (optional)
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'error.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}

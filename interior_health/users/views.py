@@ -8,7 +8,7 @@ from django.contrib import messages
 
 # Home view
 def home(request):
-    return render(request, 'users/home.html')
+    return render(request, 'users/home.html')  # Rendering the home.html template for the homepage
 
 # User registration view
 def register(request):
@@ -33,7 +33,7 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('home')  # Redirect to the homepage after login
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'users/login.html')
@@ -76,4 +76,3 @@ def dashboard(request):
         return render(request, 'users/patient_dashboard.html')
     else:
         return HttpResponse('Role not recognized.')
-
